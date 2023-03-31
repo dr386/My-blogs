@@ -12,9 +12,13 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 function App() {
+  const user = {
+    firstName: "Ran",
+    lastName: "Ding"
+  }
   return (
       <div className="App">
-        <Navigation />
+        <Navigation user={user}/>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="blog" element={<Blog />} />

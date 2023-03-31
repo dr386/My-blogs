@@ -1,5 +1,6 @@
 import { Avatar } from "antd";
-import React, { useState } from "react";
+import { UserOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const navLinks = [
@@ -12,7 +13,7 @@ const navLinks = [
     path: "/blog",
   },
   {
-    title: "Contact us",
+    title: "Contact Us",
     path: "/contact-us",
   },
   {
@@ -21,11 +22,13 @@ const navLinks = [
   },
 ];
 
-const Navigation = (user) => {
+const Navigation = ({ user }) => {
+  const [menuActive, setMenuActive] = useState(false);
+
   return (
     <nav className="site-navigation" role="navigation">
       <span className="menu-title">My Blog</span>
-      <div className="menu-content-container">
+      <div className={`menu-content-container ${menuActive? "active" : "inactive"}`}>
         <ul>
           {navLinks.map((link, index) => (
             <li key={index}>
@@ -33,16 +36,19 @@ const Navigation = (user) => {
             </li>
           ))}
         </ul>
-        <span>
+        <span className="menu-avatar-container">
           <Avatar
-            src={
-              "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-            }
-            size={38}
+            style={{ backgroundColor: "#87d068" }}
+            icon={<UserOutlined />}
+            size={35}
           />
-          <span className="menu-avatar-name">{`${user.firstName} ${user.lastName}`}</span>
+          <span className="menu-avatar-name">{`Hello, ${user.firstName}`}</span>
         </span>
       </div>
+      <i
+        className="ionicons icon ion-ios-menu"
+        onClick={() => setMenuActive(!menuActive)}
+      />
     </nav>
   );
 };

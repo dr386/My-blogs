@@ -25,10 +25,31 @@ const navLinks = [
 const Navigation = ({ user }) => {
   const [menuActive, setMenuActive] = useState(false);
 
+  const handleDocumentClick = (event) => {
+    if (
+      !event.target.closest(".menu-content-container") &
+      !event.target.closest("i", ".ion-ios-menu")
+    ) {
+      setMenuActive(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, []);
+
   return (
     <nav className="site-navigation" role="navigation">
       <span className="menu-title">My Blog</span>
-      <div className={`menu-content-container ${menuActive? "active" : "inactive"}`}>
+      <div
+        className={`menu-content-container ${
+          menuActive ? "active" : "inactive"
+        }`}
+      >
         <ul>
           {navLinks.map((link, index) => (
             <li key={index}>
@@ -47,7 +68,9 @@ const Navigation = ({ user }) => {
       </div>
       <i
         className="ionicons icon ion-ios-menu"
-        onClick={() => setMenuActive(!menuActive)}
+        onClick={() => {
+          setMenuActive(!menuActive);
+        }}
       />
     </nav>
   );
